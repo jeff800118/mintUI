@@ -5,8 +5,9 @@
 </template>
 
 <script>
+import checkForm from './components/checkForm.vue'
   export default {
-    
+    components:{checkForm}
   }
 </script>
 
