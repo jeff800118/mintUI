@@ -37,16 +37,16 @@
             disableClear
             ></mt-field>
 
-            <mt-button size="large" type="primary"  @click="checkData">送出</mt-button>
+            <mt-button size="large" type="primary" ref="btn" disabled @click="checkData">送出</mt-button>
         </div>
         <div id="middle"></div>
-        <div v-show="unameBool && upwdBool && reupwdBool && checkData">
+        <!-- <div v-show="unameBool && upwdBool && reupwdBool"> -->
+        <div v-show="check">
             <mt-field
             label="姓名"
             placeholder="請輸入姓名"
             v-model="username"
             type="password"
-            :state="success"
             disableClear
             ></mt-field>
 
@@ -88,7 +88,6 @@
 </template>
 
 <script>
-import { getEnvironmentData } from 'worker_threads'
 
     export default {
         data() {
@@ -125,13 +124,14 @@ import { getEnvironmentData } from 'worker_threads'
         methods:{
             getDetail(){
                 if(this.unameBool && this.upwdBool && this.reupwdBool){
-                    btn.classList.remove('disabled') 
+                    
                 }
             },
             unameBlur(){
                 let regExp = /^[\w]{4,8}$/
                 if(this.uname == ""){
                     this.$toast('帳號不得為空')
+                    this.unameState = "warning"
                 }else if(this.uname.match(regExp)){
                     this.unameState = "success"
                     this.unameBool = true
@@ -146,6 +146,7 @@ import { getEnvironmentData } from 'worker_threads'
                 let regExp = /^[\w]{6,10}$/
                 if(this.upwd == ""){
                     this.$toast('密碼不得為空')
+                    this.upwdState = "warning"
                 }else if(this.upwd.match(regExp)){
                     this.upwdState = "success"
                     this.upwdBool = true
@@ -159,6 +160,7 @@ import { getEnvironmentData } from 'worker_threads'
             reupwdBlur(){
                 if(this.reupwd == ""){
                     this.$toast('密碼確認不得為空')
+                    this.reupwdState = "warning"
                 }else if(this.upwd == this.reupwd){
                     this.reupwdState = "success"
                     this.reupwdBool = true
@@ -171,11 +173,27 @@ import { getEnvironmentData } from 'worker_threads'
             },
             checkData(){
                 if(this.unameBool && this.upwdBool && this.reupwdBool){
-                    this.check = true
                     this.$toast('請填入個人詳情')
+                    this.check = true
                 }
+            },
+            checkTick(){
+                setInterval(()=>{
+                if(this.unameBool && this.upwdBool && this.reupwdBool){
+                    this.$refs.btn.disabled = false
+                }else if(this.unameBool || this.upwdBool || this.reupwdBool != true){
+                    this.$refs.btn.disabled = true
+                    this.check = false
+                }
+            },1000)
             }
-        }
+        },
+        mounted(){
+            this.checkTick()
+         },
+         beforeDestroy(){
+            clearInterval(this.setInterval)
+         }
     }
 </script>
 
