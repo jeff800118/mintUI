@@ -94,10 +94,6 @@
                 })
             }
         },
-        mounted(){
-            this.getData()
-            console.log(123)
-        }
     }
 </script>
 

@@ -4,7 +4,7 @@
         title="用戶登入頁"
         fixed
         ><router-link to="/" slot="left"><mt-button 
-            icon="back" >返回</mt-button></router-link>
+            icon="back" >返回首頁</mt-button></router-link>
             <mt-button
             icon="more"
             slot="right"
