@@ -10,9 +10,9 @@
 
     <!-- 導欄行 -->
     <mt-navbar v-model="selected" style="margin-top:40px" >
-      <mt-tab-item id="1" style="margin-bottom: auto">動畫</mt-tab-item>
-      <mt-tab-item id="2" style="margin-bottom: auto">遊戲</mt-tab-item>
-      <mt-tab-item id="3" style="margin-bottom: auto">手遊</mt-tab-item>
+      <mt-tab-item id="1" style="margin-bottom: auto">家具</mt-tab-item>
+      <mt-tab-item id="2" style="margin-bottom: auto">美妝</mt-tab-item>
+      <mt-tab-item id="3" style="margin-bottom: auto">3C</mt-tab-item>
     </mt-navbar>
 
     <mt-swipe :auto="4000" :style="{height:h}">
@@ -23,19 +23,35 @@
 
     <!-- 導欄行內容 -->
     <!-- tab-container -->
-    <mt-tab-container v-model="selected">
+    <mt-tab-container v-model="selected" class="itemSelected">
       <mt-tab-container-item id="1">
-        <mt-cell v-for="n in 10":title="'動畫 ' + n" />
+        <router-link to="/login">
+          <mt-cell v-for="(n,i) in num":title="'家具 ' + n" :key="i" />
+        </router-link>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <mt-cell v-for="n in 4" :title="'遊戲 ' + n" />
+        <router-link to="/login">
+          <mt-cell v-for="(n,i) in num" :title="'美妝 ' + n" :key="i"/>
+        </router-link>
       </mt-tab-container-item>
       <mt-tab-container-item id="3">
-        <mt-cell v-for="n in 6" :title="'手遊 ' + n" />
+        <router-link to="/login">
+          <mt-cell v-for="(n,i) in num" :title="'3C ' + n" :key="i"/>
+        </router-link>
       </mt-tab-container-item>
 </mt-tab-container>
+<ul
+  class="hotlist"
+  v-infinite-scroll="loadMore"
+  infinite-scroll-disabled="loading"
+  infinite-scroll-distance="10">
+  <li v-for="(item,index) in list" :key="index">促銷熱賣{{ item }}
+  <img src="../assets/daily2.jpeg" alt="">
+  <div >價格:{{ price }} 元</div>
+</li>
+</ul>
 
-  </div>
+</div>
 </template>
 
 <script>
@@ -46,12 +62,58 @@
         // n:1,
         content:'內文',
         h:'250px',
+        num:10,
+        loading:false,
+        list:10,
+        price: Math.floor(Math.random()*10000)
       }
     },
+    methods:{
+      loadMore(){
+        this.loading = true
+        window.setTimeout(()=>{
+          this.list += 5
+          this.loading = false
+        },1000)
+      },
+      price(){
+        this.price = Math.floor(Math.random()*10000)
+      }
+    },
+    mounted(){
+      this.price()
+    }
     
   }
 </script>
 
 <style lang="scss" scoped>
-
+.itemSelected{
+  text-align: center;
+  
+  & a{
+    color: white;
+    // border:  solid red;
+    // border-radius: 50%;
+    margin-bottom: 2px;
+    background-color: rgb(167, 187, 149);
+  }
+}
+a{
+  text-decoration: none;
+}
+.hotlist{
+  line-height: 60px;
+  border:1px solid black;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  & img{
+    float:left;
+    margin-left:0px;
+    width: 100px;
+    margin-bottom: 50px;
+    padding-right: 50px;
+  }
+}
 </style>

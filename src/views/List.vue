@@ -5,14 +5,24 @@
         fixed
         ><router-link to="/login" slot="left"><mt-button
         icon="back"
-        ></mt-button></router-link></mt-header>
+        ></mt-button></router-link>
+        <mt-button
+            icon="more"
+            slot="right"
+            ></mt-button>
+        </mt-header>
 
+        <div class="img">
+            <img src="../assets/login.png"  alt="">
+        </div>
+    
         <mt-field
         class="input"
         style="margin-top:40px"
         label="用戶編號 :"
         :value="ac_num"
         readonly
+        disableClear
         >
         </mt-field>
         
@@ -21,6 +31,7 @@
         label="姓名 :"
         readonly
         :value="uname"
+        disableClear
         >
         </mt-field>
 
@@ -29,6 +40,7 @@
         label="性別 :"
         readonly
         :value="gender"
+        disableClear
         >
         </mt-field>
 
@@ -37,6 +49,7 @@
         label="電話 :"
         readonly
         :value="phone"
+        disableClear
         >
         </mt-field>
 
@@ -45,6 +58,7 @@
         label="住址 :"
         :value="address"
         readonly
+        disableClear
         >
         </mt-field>
 
@@ -53,6 +67,7 @@
         label="會員層級名 :"
         :value="permission"
         readonly
+        disableClear
         >
         </mt-field>
     </div>
@@ -94,13 +109,21 @@
                 })
             }
         },
+        mounted(){
+            this.getData()
+        }
     }
 </script>
 
 <style lang="scss" scoped>
 .input{
     font-weight: bolder;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
-
-
+.img{
+    margin-top: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 </style>

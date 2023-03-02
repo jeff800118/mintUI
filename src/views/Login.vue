@@ -11,6 +11,11 @@
             ></mt-button>
         </mt-header>
 
+        <div class="img">
+            <img src="../assets/login.png" alt="">
+        </div>
+
+    <div class="input">
         <mt-field style="margin-top:40px"
         label="帳號" 
         placeholder="請輸入帳號" 
@@ -31,8 +36,9 @@
         v-model="reupwd"
         type="password"
         ></mt-field>
+    </div>
 
-        <mt-button @click="getData">登入</mt-button>
+        <mt-button @click="getData" size="large" type="primary">登入</mt-button>
     </div>
 </template>
 
@@ -51,7 +57,7 @@
                 let url = `/login`
                 let params = `account_name=${this.uname}&account_password=${this.$md5(this.upwd)}`
                 this.axios.post(url,params).then((res)=>{
-                    console.log(res)
+                    // console.log(res)
                     if(res.data == 1){
                         this.$toast({
                             message:'登入成功',
@@ -78,5 +84,15 @@
 </script>
 
 <style lang="scss" scoped>
-
+.input{
+    text-align: center;
+margin-top:50px;
+margin-bottom:50px;
+}
+.img{
+    margin-top: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 </style>
