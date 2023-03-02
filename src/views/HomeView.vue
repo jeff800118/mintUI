@@ -15,10 +15,10 @@
       <mt-tab-item id="3" style="margin-bottom: auto">3C</mt-tab-item>
     </mt-navbar>
 
-    <mt-swipe :auto="4000" :style="{height:h}">
-      <mt-swipe-item><img src="../assets/3C產品/3C1.jpg" alt="" style="height:230px;width:100%"></mt-swipe-item>
-      <mt-swipe-item><img src="../assets/3C產品/3C1.jpg" alt="" style="height:230px;width:100%"></mt-swipe-item>
-      <mt-swipe-item><img src="../assets/3C產品/3C1.jpg" alt="" style="height:230px;width:100%"></mt-swipe-item>
+    <mt-swipe  >
+      <mt-swipe-item><img src="../assets/3C產品/3C1.jpg" alt="" ></mt-swipe-item>
+      <mt-swipe-item><img src="../assets/3C產品/3C2.png" alt="" ></mt-swipe-item>
+      <mt-swipe-item><img src="../assets/3C產品/3C3.jpg" alt="" ></mt-swipe-item>
     </mt-swipe>
 
     <!-- 導欄行內容 -->
@@ -40,16 +40,33 @@
         </router-link>
       </mt-tab-container-item>
 </mt-tab-container>
-<ul
-  class="hotlist"
+<div class="back">
+  <div
+  id="hotlist"
   v-infinite-scroll="loadMore"
   infinite-scroll-disabled="loading"
   infinite-scroll-distance="10">
-  <li v-for="(item,index) in list" :key="index">促銷熱賣{{ item }}
-  <img src="../assets/daily2.jpeg" alt="">
-  <div >價格:{{ price }} 元</div>
-</li>
-</ul>
+  <div v-for="(item,index) in list" :key="index"  id="box">
+
+    <div id="imgPart">  
+      <img src="../assets/daily2.jpeg" alt="">
+    </div>
+
+    <div id="detail">
+      <div style="background-color: red;color: white;" class="topic">
+        <span>促銷熱賣第{{ item }}名</span>
+      </div>
+      <div class="delContent">
+        <span>項目{{ item }} </span> <br>
+        <span>定價:{{ price }} 元</span> <br>
+        <span>特價:{{ discount }} 折</span> 
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
 
 </div>
 </template>
@@ -61,11 +78,12 @@
         selected: 1,
         // n:1,
         content:'內文',
-        h:'250px',
+        // h:'110px',
         num:10,
         loading:false,
         list:10,
-        price: Math.floor(Math.random()*10000)
+        price: Math.floor(Math.random()*10000),
+        discount:Math.floor(Math.random()*100)
       }
     },
     methods:{
@@ -75,9 +93,6 @@
           this.list += 5
           this.loading = false
         },1000)
-      },
-      price(){
-        this.price = Math.floor(Math.random()*10000)
       }
     },
     mounted(){
@@ -90,7 +105,6 @@
 <style lang="scss" scoped>
 .itemSelected{
   text-align: center;
-  
   & a{
     color: white;
     // border:  solid red;
@@ -102,18 +116,54 @@
 a{
   text-decoration: none;
 }
-.hotlist{
-  line-height: 60px;
-  border:1px solid black;
-  list-style: none;
+#hotlist{
+  display: flex;
+  flex-direction: column;;
+  & img{
+    // float:left;
+    margin-left:0px;
+    width: 120px;
+    height: 95%;
+    padding-right: 6px;
+  }
+}
+
+#box{
+  display: flex;
+  flex-direction: row;
+  border:1px solid gray;
+  border-radius:4px;
+}
+
+.mint-swipe{
+  height:350px;
+}
+.mint-swipe img{
+  width:100%;
+  height: 100%;
+}
+
+
+#detail{
   display: flex;
   flex-direction: column;
-  & img{
-    float:left;
-    margin-left:0px;
-    width: 100px;
-    margin-bottom: 50px;
-    padding-right: 50px;
-  }
+  flex:1 2
+}
+
+#imgPart{
+  border-right: 1px solid gray;
+}
+
+.delContent{
+  line-height: 30px;
+  padding-top:5px;
+  text-align:start;
+}
+.topic{
+  text-align: center;
+}
+
+.delContent{
+  align-items: stretch;
 }
 </style>
